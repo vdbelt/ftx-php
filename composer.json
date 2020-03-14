@@ -1,0 +1,37 @@
+{
+    "name": "vdbelt/ftx-php",
+    "description": "A PHP client for FTX.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin van de Belt",
+            "email": "martin@vandebelt.dk"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "psr/http-message": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "php-http/discovery": "^1.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0",
+        "kriswallsmith/buzz": "^1.1",
+        "nyholm/psr7": "^1.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Vdbelt\\FTX\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vdbelt\\FTX\\Tests\\": "tests"
+        }
+    }
+}
