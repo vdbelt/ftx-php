@@ -7,6 +7,7 @@ namespace Vdbelt\FTX\Client;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Vdbelt\FTX\Client\Exceptions\NotFoundException;
+use Vdbelt\FTX\Client\Exceptions\UnauthorizedException;
 
 class HttpExceptionHandler
 {
@@ -14,6 +15,10 @@ class HttpExceptionHandler
     {
         if(404 == $response->getStatusCode()) {
             throw new NotFoundException($this->getResponseMessage($response), $request, $response);
+        }
+        
+        if(401 == $response->getStatusCode()) {
+            throw new UnauthorizedException($this->getResponseMessage($response), $request, $response);
         }
         
         return $response;
