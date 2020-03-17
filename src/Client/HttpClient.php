@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdbelt\FTX\Client;
+namespace FTX\Client;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -20,9 +20,9 @@ class HttpClient
     protected HttpExceptionHandler $exceptionHandler;
     
     protected string $base_uri;
-    protected ?string $api_key = null;
-    protected ?string $api_secret = null;
-    protected ?string $subaccount = null;
+    public ?string $api_key = null;
+    public ?string $api_secret = null;
+    public ?string $subaccount = null;
     
     public function __construct(
         ClientInterface $client, 

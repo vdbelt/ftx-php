@@ -1,9 +1,9 @@
 <?php
 
-namespace Vdbelt\FTX\Api;
+namespace FTX\Api;
 
 use Psr\Http\Message\ResponseInterface;
-use Vdbelt\FTX\Api\Traits\TransformsTimestamps;
+use FTX\Api\Traits\TransformsTimestamps;
 
 class Markets extends HttpApi
 {

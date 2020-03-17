@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Vdbelt\FTX\Api;
+namespace FTX\Api;
 
 
-use Vdbelt\FTX\Api\Requests\CreateQuoteRequest;
-use Vdbelt\FTX\Api\Traits\TransformsTimestamps;
+use FTX\Api\Requests\CreateQuoteRequest;
+use FTX\Api\Traits\TransformsTimestamps;
 
 class Options extends HttpApi
 {

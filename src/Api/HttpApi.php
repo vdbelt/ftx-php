@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdbelt\FTX\Api;
+namespace FTX\Api;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -8,7 +8,7 @@ use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Vdbelt\FTX\Client\HttpClient;
+use FTX\Client\HttpClient;
 
 abstract class HttpApi
 {

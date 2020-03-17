@@ -28,12 +28,16 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Vdbelt\\FTX\\": "src/"
+            "FTX\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Vdbelt\\FTX\\Tests\\": "tests"
+            "FTX\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html build/"
     }
 }

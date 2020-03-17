@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdbelt\FTX;
+namespace FTX;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -8,17 +8,17 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
-use Vdbelt\FTX\Api\Account;
-use Vdbelt\FTX\Api\Fills;
-use Vdbelt\FTX\Api\FundingPayments;
-use Vdbelt\FTX\Api\Futures;
-use Vdbelt\FTX\Api\LeveragedTokens;
-use Vdbelt\FTX\Api\Markets;
-use Vdbelt\FTX\Api\Options;
-use Vdbelt\FTX\Api\Orders;
-use Vdbelt\FTX\Api\Subaccounts;
-use Vdbelt\FTX\Api\Wallet;
-use Vdbelt\FTX\Client\HttpClient;
+use FTX\Api\Account;
+use FTX\Api\Fills;
+use FTX\Api\FundingPayments;
+use FTX\Api\Futures;
+use FTX\Api\LeveragedTokens;
+use FTX\Api\Markets;
+use FTX\Api\Options;
+use FTX\Api\Orders;
+use FTX\Api\Subaccounts;
+use FTX\Api\Wallet;
+use FTX\Client\HttpClient;
 
 final class FTX
 {
@@ -46,6 +46,11 @@ final class FTX
         }
         
         return new self($httpClient);
+    }
+    
+    public function getClient()
+    {
+        return $this->client;
     }
     
     public function onSubaccount(string $subaccount) : self

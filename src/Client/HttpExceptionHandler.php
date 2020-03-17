@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Vdbelt\FTX\Client;
+namespace FTX\Client;
 
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Vdbelt\FTX\Client\Exceptions\NotFoundException;
-use Vdbelt\FTX\Client\Exceptions\UnauthorizedException;
+use FTX\Client\Exceptions\NotFoundException;
+use FTX\Client\Exceptions\UnauthorizedException;
 
 class HttpExceptionHandler
 {

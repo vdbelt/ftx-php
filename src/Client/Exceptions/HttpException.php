@@ -1,13 +1,12 @@
 <?php
 
 
-namespace Vdbelt\FTX\Client\Exceptions;
+namespace FTX\Client\Exceptions;
 
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
-use Vdbelt\FTX\Exception;
 
 class HttpException extends \Exception
 {

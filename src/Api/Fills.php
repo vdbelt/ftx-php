@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Vdbelt\FTX\Api;
+namespace FTX\Api;
 
 
-use Vdbelt\FTX\Api\Traits\TransformsTimestamps;
+use FTX\Api\Traits\TransformsTimestamps;
 
 class Fills extends HttpApi
 {

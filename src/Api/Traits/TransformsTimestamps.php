@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Vdbelt\FTX\Api\Traits;
+namespace FTX\Api\Traits;
 
 
 trait TransformsTimestamps

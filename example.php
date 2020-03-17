@@ -2,7 +2,7 @@
 
 require('vendor/autoload.php');
 
-use Vdbelt\FTX\FTX;
+use FTX\FTX;
 
 // Unauthenticated
 $ftx = FTX::create();

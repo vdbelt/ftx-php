@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Vdbelt\FTX\Api;
+namespace FTX\Api;
 
 
 class Subaccounts extends HttpApi

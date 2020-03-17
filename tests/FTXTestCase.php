@@ -1,6 +1,6 @@
 <?php
 
-namespace Vdbelt\FTX\Tests;
+namespace FTX\Tests;
 
 use PHPUnit\Framework\TestCase;
 

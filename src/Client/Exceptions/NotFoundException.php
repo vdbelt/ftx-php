@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Vdbelt\FTX\Client\Exceptions;
+namespace FTX\Client\Exceptions;
 
 
 class NotFoundException extends HttpException
