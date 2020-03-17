@@ -1,4 +1,4 @@
-## Do not use: WIP
+## Please note: WIP!
 # PHP client for FTX
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vdbelt/ftx-php/PHP%20Composer)
 ![Codecov](https://img.shields.io/codecov/c/github/vdbelt/ftx-php)
@@ -15,6 +15,11 @@ composer require vdbelt/ftx-php
 
 This library is not hard coupled to Guzzle or any other HTTP library. It follows PSR-18 client abstraction. You'll need to install your own preferred client.
 
+If you want to get started quickly:
+```bash
+composer require vdbelt/ftx-php php-http/curl-client nyholm/psr7
+```
+
 ### Basic usage
 ```php
 use FTX\FTX;
@@ -27,4 +32,9 @@ $ftx = FTX::create('key', 'secret');
 
 $markets = $ftx->markets()->all();
 $btcPerp = $ftx->markets()->get('BTC-PERP');
+```
+
+If you want to perform an account on a certain subaccount, you can do so:
+```php
+$orders = $ftx->onSubaccount('foo')->orders()->open();
 ```
