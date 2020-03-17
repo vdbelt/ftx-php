@@ -19,4 +19,12 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+      
+    - name: Generate coverage report
+      run: composer run-script test-coverage-clover
+    
+    - name: Upload coverage to codecov 
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
 

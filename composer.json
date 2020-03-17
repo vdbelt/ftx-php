@@ -38,6 +38,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html build/"
+        "test-coverage": "vendor/bin/phpunit --coverage-html build/",
+        "test-coverage-clover": "vendor/bin/phpunit --coverage-clover=coverage.xml"
     }
 }
