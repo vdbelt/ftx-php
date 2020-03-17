@@ -57,7 +57,7 @@ class HttpClient
         return $this->send('GET', $path, $parameters);
     }
     
-    public function post(string $path, array $parameters = [], $payload = []) : ResponseInterface
+    public function post(string $path, ?array $parameters = [], array $payload = []) : ResponseInterface
     {
         $body = $this->streamFactory->createStream(json_encode($payload));
         return $this->send('POST', $path, $parameters, $body);
@@ -68,7 +68,7 @@ class HttpClient
         return $this->send('DELETE', $path);
     }
     
-    private function send(string $method, $path, array $parameters = [], StreamInterface $body = null) : ResponseInterface
+    private function send(string $method, $path, ?array $parameters = [], StreamInterface $body = null) : ResponseInterface
     {
         $request = $this->createRequest($method, $path, $parameters, $body);
         
@@ -78,12 +78,18 @@ class HttpClient
         return $response;
     }
     
-    private function createUri(string $path, array $parameters = []) : UriInterface
+    private function createUri(string $path, ?array $parameters = []) : UriInterface
     {
-        return $this->uriFactory->createUri($this->base_uri.'/'.$path.'?'.http_build_query($parameters));
+        $uri = $this->uriFactory->createUri($this->base_uri.'/'.$path);
+        
+        if(null !== $parameters) {
+            $uri = $uri->withQuery(http_build_query($parameters));
+        }
+        
+        return $uri;
     }
     
-    private function createRequest(string $method, $path, array $parameters = [], StreamInterface $body = null) : RequestInterface
+    private function createRequest(string $method, $path, ?array $parameters = [], StreamInterface $body = null) : RequestInterface
     {
         $uri = $this->createUri($path, $parameters);
         
@@ -99,14 +105,22 @@ class HttpClient
         
         if(null !== $this->api_key && null !== $this->api_secret) {
             $timestamp = time()*1000;
-            $data = $timestamp.$method.$uri->getPath();
-            $hash = hash_hmac('sha256', $data, $this->api_secret);
             $request = $request->withHeader('FTX-KEY', $this->api_key);
             $request = $request->withHeader('FTX-TS', $timestamp);
-            $request = $request->withHeader('FTX-SIGN', $hash);
+            $request = $request->withHeader('FTX-SIGN', $this->calculateSignature($timestamp, $request));
         }
         
         return $request;
+    }
+    
+    private function calculateSignature(int $timestamp, RequestInterface $request)
+    {
+        $data = $timestamp
+            . $request->getMethod()
+            . $request->getUri()->getPath()
+            . ($request->getUri()->getQuery() ? '?'.$request->getUri()->getQuery() : '');
+        
+        return hash_hmac('sha256', $data, $this->api_secret);
     }
     
 }

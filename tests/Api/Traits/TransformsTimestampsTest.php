@@ -3,6 +3,7 @@
 namespace FTX\Tests\Api\Traits;
 
 
+use Cassandra\Date;
 use FTX\Api\Traits\TransformsTimestamps;
 use FTX\Tests\FTXTestCase;
 

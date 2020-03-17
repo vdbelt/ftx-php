@@ -18,14 +18,4 @@ class Orders extends HttpApi
     {
         return $this->respond($this->http->get(self::ORDERS_HISTORY_URI));
     }
-    
-    public function create()
-    {
-        
-    }
-    
-    public function modify()
-    {
-        
-    }
 }

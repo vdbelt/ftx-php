@@ -4,7 +4,6 @@
 namespace FTX\Api;
 
 
-use FTX\Api\Requests\CreateQuoteRequest;
 use FTX\Api\Traits\TransformsTimestamps;
 
 class Options extends HttpApi
@@ -30,11 +29,6 @@ class Options extends HttpApi
         return $this->respond($this->http->get(self::OPTIONS_MY_REQUESTS_URI));
     }
     
-    public function createRequest(CreateQuoteRequest $request)
-    {
-        
-    }
-    
     public function cancelRequest(string $request_id)
     {
         return $this->respond($this->http->delete(self::OPTIONS_URI.'/requests/'.$request_id));
@@ -45,9 +39,9 @@ class Options extends HttpApi
         return $this->respond($this->http->get(self::OPTIONS_URI.'/requests/'.$request_id.'/quotes'));
     }
     
-    public function createQuote()
+    public function createQuote(string $request_id, float $price)
     {
-        
+        return $this->respond($this->http->post(self::OPTIONS_URI.'/requests/'.$request_id.'/quotes', null, compact('price')));
     }
     
     public function myQuotes()
@@ -62,7 +56,7 @@ class Options extends HttpApi
     
     public function acceptQuote(string $quote_id)
     {
-        
+        return $this->respond($this->http->post(self::OPTIONS_URI.'/quotes/'.$quote_id.'/accept'));
     }
     
     public function accountInfo()

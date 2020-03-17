@@ -13,7 +13,7 @@ This library is not hard coupled to Guzzle or any other HTTP library. It follows
 
 ### Basic usage
 ```php
-use Vdbelt\FTX\FTX;
+use FTX\FTX;
 
 // Unauthenticated
 $ftx = FTX::create();

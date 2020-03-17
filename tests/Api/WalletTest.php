@@ -45,11 +45,6 @@ class WalletTest extends TestCase
         $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/wallet/coins');
     }
 
-    public function testRequestWithdrawal()
-    {
-
-    }
-
     public function testBalances()
     {
         $this->wallet->balances();

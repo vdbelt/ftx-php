@@ -42,9 +42,4 @@ class Wallet extends HttpApi
     {
         return $this->respond($this->http->get(self::WALLET_WITHDRAWALS_URI));
     }
-    
-    public function requestWithdrawal(string $coin, string $size, string $address, string $tag, string $password, string $code)
-    {
-        
-    }
 }

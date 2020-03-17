@@ -38,11 +38,11 @@ class LeveragedTokens extends HttpApi
     
     public function requestCreation(string $token_name, float $size)
     {
-        
+        return $this->respond($this->http->post('lt/'.$token_name.'/create', null, compact('size')));
     }
     
     public function requestRedemption(string $token_name, float $size)
     {
-        
+        return $this->respond($this->http->post('lt/'.$token_name.'/redeem', null, compact('size')));
     }
 }

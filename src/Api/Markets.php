@@ -26,7 +26,7 @@ class Markets extends HttpApi
         return $this->respond($this->http->get(self::MARKETS_URI.'/'.$market.'/orderbook', compact('depth')));
     }
     
-    public function trades(string $market, ?int $limit, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
+    public function trades(string $market, ?int $limit = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
     {
         [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
         

@@ -12,7 +12,7 @@ class Fills extends HttpApi
     
     const FILLS_URI = 'fills';
     
-    public function all(string $market, int $limit, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
+    public function all(?string $market = null, ?int $limit = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
     {
         [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
         
