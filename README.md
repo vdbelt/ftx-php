@@ -1,5 +1,9 @@
 ## Do not use: WIP
 # PHP client for FTX
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vdbelt/ftx-php/PHP%20Composer)
+![Codecov](https://img.shields.io/codecov/c/github/vdbelt/ftx-php)
+![Packagist](https://img.shields.io/packagist/dt/vdbelt/ftx-php)
+![GitHub](https://img.shields.io/github/license/vdbelt/ftx-php)
 
 This package aims to implement the FTX.com REST API endpoints.
 
