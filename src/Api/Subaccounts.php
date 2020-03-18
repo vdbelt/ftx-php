@@ -20,7 +20,7 @@ class Subaccounts extends HttpApi
         return $this->respond($this->http->post(self::SUBACCOUNTS_URI, null, compact('nickname')));
     }
     
-    public function changeName(string $nickname, string $newNickname)
+    public function rename(string $nickname, string $newNickname)
     {
         return $this->respond($this->http->post(self::SUBACCOUNTS_UPDATE_NAME_URI, null, compact('nickname', 'newNickname')));
     }

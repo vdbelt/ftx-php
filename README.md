@@ -39,6 +39,25 @@ If you want to perform an action on a certain subaccount, you can do so:
 $orders = $ftx->onSubaccount('foo')->orders()->open();
 ```
 
+### Managing subaccounts
+```php
+$ftx->subaccounts()->all()
+$ftx->subaccounts()->create('nickname')
+$ftx->subaccounts()->rename('old', 'new')
+$ftx->subaccounts()->delete('nickname')
+$ftx->subaccounts()->balances('nickname') // Get balances for a specific subaccount
+$ftx->subaccounts()->transfer('BTC', 1, 'main', 'nickname') // Transfer funds between subaccounts
+```
+
+### Markets
+```php
+$ftx->markets()->all()
+$ftx->markets()->get('BTC-PERP')
+$ftx->markets()->orderbook('BTC-PERP', 100)
+$ftx->markets()->trades('BTC-PERP', 100, new \DateTime('2020-03-01'), new \DateTime('2020-03-01 06:00:00'))
+$ftx->markets()->candles('BTC-PERP', 15, 100)
+```
+
 ### Placing orders
 You can either pass the properties of your order directly:
 ```php

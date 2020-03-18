@@ -35,7 +35,7 @@ class SubaccountsTest extends TestCase
 
     public function testChangeName()
     {
-        $this->subaccounts->changeName('foo', 'bar');
+        $this->subaccounts->rename('foo', 'bar');
 
         $responseBody = $this->client->getLastRequest()->getBody();
         $responseBody->rewind();
