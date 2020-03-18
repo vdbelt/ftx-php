@@ -39,7 +39,7 @@ If you want to perform an action on a certain subaccount, you can do so:
 $orders = $ftx->onSubaccount('foo')->orders()->open();
 ```
 
-### Managing subaccounts
+### Subaccounts
 ```php
 $ftx->subaccounts()->all()
 $ftx->subaccounts()->create('nickname')
@@ -58,13 +58,77 @@ $ftx->markets()->trades('BTC-PERP', 100, new \DateTime('2020-03-01'), new \DateT
 $ftx->markets()->candles('BTC-PERP', 15, 100)
 ```
 
-### Placing orders
-You can either pass the properties of your order directly:
+### Futures
 ```php
-$ftx->orders()->create(['market' => 'BTC-PERP', 'type' => 'market', 'size' => 1])->place();
+$ftx->futures()->all()
+$ftx->futures()->get('BTC-0626')
+$ftx->futures()->stats('BTC-0626')
+$ftx->futures()->fundingRates()
 ```
 
-or use the fluent api to build up an order:
+### Account
 ```php
+$ftx->account()->get()
+$ftx->account()->positions()
+$ftx->account()->changeAccountLeverage(101)
+```
+
+### Wallet
+```php
+$ftx->wallet()->coins()
+$ftx->wallet()->balances()
+$ftx->wallet()->allBalances() // Balances accross all subaccounts
+$ftx->wallet()->depositAddress('BTC')
+$ftx->wallet()->deposits()
+$ftx->wallet()->withdrawals()
+```
+
+### Orders
+```php
+$ftx->orders()->open()
+$ftx->orders()->history()
+
+// Placing orders
+// You can either pass the properties of your order directly:
+$ftx->orders()->create(['market' => 'BTC-PERP', 'type' => 'market', 'size' => 1])->place();
+
+// or use the fluent api to build up an order:
 $ftx->orders()->create()->buy('BTC-PERP')->limit(1, 4000)->place();
+```
+
+### Fills
+```php
+$ftx->fills()->all()
+```
+
+### Funding Payments
+```php
+$ftx->fundingPayments()->all()
+```
+
+### Leveraged Tokens
+```php
+$ftx->leveragedTokens()->all()
+$ftx->leveragedTokens()->info('foo')
+$ftx->leveragedTokens()->balances()
+$ftx->leveragedTokens()->creationRequests()
+$ftx->leveragedTokens()->redemptions()
+$ftx->leveragedTokens()->requestCreation('foo', 10)
+$ftx->leveragedTokens()->requestRedemption('foo', 10)
+```
+
+### Options
+```php
+$ftx->options()->requests()
+$ftx->options()->myRequests()
+$ftx->options()->cancelRequest('id')
+$ftx->options()->quotesForRequest('id')
+$ftx->options()->createQuote('id', 100)
+$ftx->options()->myQuotes()
+$ftx->options()->cancelQuote('id')
+$ftx->options()->acceptQuote('id')
+$ftx->options()->accountInfo()
+$ftx->options()->positions()
+$ftx->options()->trades()
+$ftx->options()->fills()
 ```
