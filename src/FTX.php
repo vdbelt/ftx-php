@@ -4,10 +4,6 @@ namespace FTX;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\UriFactoryInterface;
 use FTX\Api\Account;
 use FTX\Api\Fills;
 use FTX\Api\FundingPayments;
@@ -60,7 +56,7 @@ final class FTX
         return $this;
     }
     
-    public function subaccounts()
+    public function subaccounts() : Subaccounts
     {
         return new Subaccounts($this->client);
     }
@@ -75,37 +71,37 @@ final class FTX
         return new Futures($this->client);
     }
     
-    public function account()
+    public function account() : Account
     {
         return new Account($this->client);
     }
     
-    public function wallet()
+    public function wallet() : Wallet
     {
         return new Wallet($this->client);
     }
     
-    public function orders()
+    public function orders() : Orders
     {
         return new Orders($this->client);
     }
     
-    public function fills()
+    public function fills() : Fills
     {
         return new Fills($this->client);
     }
     
-    public function fundingPayments()
+    public function fundingPayments() : FundingPayments
     {
         return new FundingPayments($this->client);
     }
     
-    public function leveragedTokens()
+    public function leveragedTokens() : LeveragedTokens
     {
         return new LeveragedTokens($this->client);
     }
     
-    public function options()
+    public function options() : Options
     {
         return new Options($this->client);
     }

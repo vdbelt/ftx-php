@@ -20,7 +20,7 @@ If you want to get started quickly:
 composer require vdbelt/ftx-php php-http/curl-client nyholm/psr7
 ```
 
-### Basic usage
+## Basic usage
 ```php
 use FTX\FTX;
 
@@ -34,7 +34,18 @@ $markets = $ftx->markets()->all();
 $btcPerp = $ftx->markets()->get('BTC-PERP');
 ```
 
-If you want to perform an account on a certain subaccount, you can do so:
+If you want to perform an action on a certain subaccount, you can do so:
 ```php
 $orders = $ftx->onSubaccount('foo')->orders()->open();
+```
+
+### Placing orders
+You can either pass the properties of your order directly:
+```php
+$ftx->orders()->create(['market' => 'BTC-PERP', 'type' => 'market', 'size' => 1])->place();
+```
+
+or use the fluent api to build up an order:
+```php
+$ftx->orders()->create()->buy('BTC-PERP')->limit(1, 4000)->place();
 ```

@@ -41,13 +41,13 @@ class HttpClient
         $this->base_uri = $base_uri;
     }
     
-    public function authenticate(string $api_key, string $api_secret) 
+    public function authenticate(string $api_key, string $api_secret) : void 
     {
         $this->api_key = $api_key;
         $this->api_secret = $api_secret;
     }
     
-    public function subaccount(string $subaccount)
+    public function subaccount(string $subaccount) : void 
     {
         $this->subaccount = $subaccount;
     }
@@ -113,7 +113,7 @@ class HttpClient
         return $request;
     }
     
-    private function calculateSignature(int $timestamp, RequestInterface $request)
+    private function calculateSignature(int $timestamp, RequestInterface $request) : string 
     {
         $data = $timestamp
             . $request->getMethod()
