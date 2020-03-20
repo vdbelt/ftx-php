@@ -4,6 +4,7 @@
 namespace FTX\Client;
 
 
+use FTX\Client\Exceptions\TooManyRequestsException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use FTX\Client\Exceptions\NotFoundException;
@@ -19,6 +20,10 @@ class HttpExceptionHandler
         
         if(401 == $response->getStatusCode()) {
             throw new UnauthorizedException($this->getResponseMessage($response), $request, $response);
+        }
+
+        if(429 == $response->getStatusCode()) {
+            throw new TooManyRequestsException($this->getResponseMessage($response), $request, $response);
         }
         
         return $response;

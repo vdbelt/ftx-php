@@ -4,6 +4,7 @@ namespace FTX\Tests\Client;
 
 use FTX\Client\Exceptions\HttpException;
 use FTX\Client\Exceptions\NotFoundException;
+use FTX\Client\Exceptions\TooManyRequestsException;
 use FTX\Client\Exceptions\UnauthorizedException;
 use FTX\Client\HttpExceptionHandler;
 use FTX\Tests\FTXTestCase;
@@ -66,6 +67,16 @@ class HttpExceptionHandlerTest extends FTXTestCase
         $this->httpExceptionHandler->transformResponseToException(
             new Request('GET', 'foo'),
             new Response(401)
+        );
+    }
+
+    public function testRateLimitException()
+    {
+        $this->expectException(TooManyRequestsException::class);
+
+        $this->httpExceptionHandler->transformResponseToException(
+            new Request('GET', 'foo'),
+            new Response(429)
         );
     }
 }
