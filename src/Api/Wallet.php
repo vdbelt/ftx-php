@@ -4,6 +4,8 @@
 namespace FTX\Api;
 
 
+use FTX\Api\Support\PendingWithdrawalRequest;
+
 class Wallet extends HttpApi
 {
     const WALLET_COINS_URI = 'wallet/coins';
@@ -41,5 +43,15 @@ class Wallet extends HttpApi
     public function withdrawals()
     {
         return $this->respond($this->http->get(self::WALLET_WITHDRAWALS_URI));
+    }
+    
+    public function createWithdrawalRequest(string $coin, float $size, string $address) : PendingWithdrawalRequest
+    {
+        return new PendingWithdrawalRequest($this, compact('coin', 'size', 'address'));
+    }
+    
+    public function withdraw(PendingWithdrawalRequest $pendingWithdrawalRequest)
+    {
+        return $this->respond($this->http->post(self::WALLET_WITHDRAWALS_URI, null, $pendingWithdrawalRequest->toArray()));
     }
 }

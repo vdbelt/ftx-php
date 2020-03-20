@@ -4,26 +4,14 @@
 namespace FTX\Api\Support;
 
 
-use FTX\Api\Orders;
 
-class PendingOrder
+class PendingOrder extends PendingRequest
 {
-    protected Orders $ordersApi;
-    
     const SIDE_BUY = 'buy';
     const SIDE_SELL = 'sell';
-    
+
     const TYPE_LIMIT = 'limit';
     const TYPE_MARKET = 'market';
-    
-    protected array $attributes = [];
-    
-    public function __construct(Orders $ordersApi, ?array $attributes = [])
-    {
-        $this->ordersApi = $ordersApi;
-        
-        $this->attributes = array_merge($this->attributes, $attributes);
-    }
     
     public function buy(string $market) : self
     {
@@ -86,18 +74,8 @@ class PendingOrder
         return $this;
     }
     
-    public function __get($name)
-    {
-        return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : null;
-    }
-
-    public function toArray()
-    {
-        return $this->attributes;
-    }
-    
     public function place()
     {
-        return $this->ordersApi->place($this);
+        return $this->api->place($this);
     }
 }
