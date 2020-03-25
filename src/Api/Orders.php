@@ -15,7 +15,12 @@ class Orders extends HttpApi
     {
         return $this->respond($this->http->get(self::ORDERS_URI, compact('market')));
     }
-    
+
+    public function status(string $orderId)
+    {
+        return $this->respond($this->http->get(self::ORDERS_URI . '/' . $orderId));
+    }
+
     public function create(?array $attributes = []) : PendingOrder
     {
         return new PendingOrder($this, $attributes);
