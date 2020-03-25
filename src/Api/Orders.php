@@ -30,9 +30,27 @@ class Orders extends HttpApi
     {
         return $this->respond($this->http->post(self::ORDERS_URI, null, $pendingOrder->toArray()));
     }
-    
+
+    public function cancel(string $orderId)
+    {
+        return $this->respond($this->http->delete(self::ORDERS_URI . '/' . $orderId));
+    }
+
+    /**
+     * This will also cancel conditional orders (stop loss and trailing stop orders).
+     * @param string|null $market
+     * @param bool|null $conditionalOrdersOnly
+     * @param bool|null $limitOrdersOnly
+     * @return mixed
+     */
+    public function cancelAll(?string $market = null, ?bool $conditionalOrdersOnly = null, ?bool $limitOrdersOnly = null)
+    {
+        return $this->respond($this->http->delete(self::ORDERS_URI, null, compact('market', 'conditionalOrdersOnly', 'limitOrdersOnly')));
+    }
+
     public function history()
     {
         return $this->respond($this->http->get(self::ORDERS_HISTORY_URI));
     }
+
 }
