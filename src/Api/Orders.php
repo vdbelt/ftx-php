@@ -11,9 +11,9 @@ class Orders extends HttpApi
     const ORDERS_URI = 'orders';
     const ORDERS_HISTORY_URI = 'orders/history';
     
-    public function open()
+    public function open(?string $market = null)
     {
-        return $this->respond($this->http->get(self::ORDERS_URI));
+        return $this->respond($this->http->get(self::ORDERS_URI, compact('market')));
     }
     
     public function create(?array $attributes = []) : PendingOrder
