@@ -87,8 +87,12 @@ $ftx->wallet()->createWithdrawalRequest('BTC', 1, 'address')->withPassword()->wi
 
 ### Orders
 ```php
-$ftx->orders()->open()
-$ftx->orders()->history()
+$ftx->orders()->open();
+$ftx->orders()->open('BTC-PERP');
+
+// history
+$ftx->orders()->history();
+$ftx->orders()->history('BTC-PERP')
 
 // Placing orders
 // You can either pass the properties of your order directly:
@@ -96,6 +100,44 @@ $ftx->orders()->create(['market' => 'BTC-PERP', 'type' => 'market', 'size' => 1]
 
 // or use the fluent api to build up an order:
 $ftx->orders()->create()->buy('BTC-PERP')->limit(1, 4000)->place();
+
+// order status
+$ftx->orders()->status(123456);
+
+// cancel order
+$ftx->orders()->cancel(123456);
+
+// cancel all orders, including conditional orders
+$ftx->orders()->cancelAll();
+$ftx->orders()->cancelAll('BTC-PERP', $conditionalOrdersOnly = false, $limitOrdersOnly = true)
+
+```
+
+### Conditional Orders
+```php
+$ftx->conditionalOrders()->open();
+$ftx->conditionalOrders()->open('BTC-PERP', 'take_profit');
+
+//history
+$ftx->conditionalOrders()->history();
+$ftx->conditionalOrders()->history('BTC-PERP', null, null, 'buy', 'stop', 'market', 10);
+
+// Placing orders
+// You can either pass the properties of your order directly:
+$ftx->conditionalOrders()->create(['market' => 'BTC-PERP', 'type' => 'takeProfit', 'triggerPrice' => 7000.99, 'size' => 1, 'side' => 'buy', 'reduceOnly' => true])->place();
+
+// or use the fluent api to build up an order:
+$ftx->conditionalOrders()->create()->stop($size = 1, $triggerPrice = 7000.99)->buy('BTC-PERP')->reduceOnly()->place();
+
+// order status
+$ftx->conditionalOrders()->status(123456);
+
+// cancel order
+$ftx->conditionalOrders()->cancel(123456);
+
+// cancel all orders conditional orders
+$ftx->conditionalOrders()->cancelAll();
+$ftx->conditionalOrders()->cancelAll('BTC-PERP', $conditionalOrdersOnly = true, $limitOrdersOnly = true)
 ```
 
 ### Fills
