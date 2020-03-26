@@ -22,44 +22,100 @@ class OrdersTest extends TestCase
     {
         $this->orders->history();
 
-        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/orders/history');
-        $this->assertEquals($this->client->getLastRequest()->getMethod(), 'GET');
+        $this->assertEquals('/api/orders/history', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
+        $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
+
+        $this->orders->history('BTC_PERP', 10000, 20000, 50);
+
+        $this->assertEquals('/api/orders/history', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
+
+        parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
+        $this->assertEquals(['market' => 'BTC_PERP', 'start_time' => '10000', 'end_time' => '20000', 'limit' => '50'],
+            $query
+        );
+
+    }
+
+    public function testStatus()
+    {
+        $this->orders->status(12345678);
+
+        $this->assertEquals('/api/orders/' . 12345678, $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
+    }
+
+    public function testCancel()
+    {
+        $this->orders->cancel(12345678);
+
+        $this->assertEquals('/api/orders/' . 12345678, $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('DELETE', $this->client->getLastRequest()->getMethod());
+
+
+        $this->orders->cancelAll();
+
+        $responseBody = $this->client->getLastRequest()->getBody();
+        $responseBody->rewind();
+        $payload = json_decode($responseBody->getContents(), true);
+
+        $this->assertEquals('/api/orders', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('DELETE', $this->client->getLastRequest()->getMethod());
+        $this->assertEquals(['market' => null, 'conditionalOrdersOnly' => null, 'limitOrdersOnly' => null], $payload);
+
+
+        $this->orders->cancelAll('BTC-PERP', false, false);
+
+        $responseBody = $this->client->getLastRequest()->getBody();
+        $responseBody->rewind();
+        $payload = json_decode($responseBody->getContents(), true);
+
+        $this->assertEquals('/api/orders', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('DELETE', $this->client->getLastRequest()->getMethod());
+        $this->assertEquals(['market' => 'BTC-PERP', 'conditionalOrdersOnly' => false, 'limitOrdersOnly' => false], $payload);
     }
 
     public function testOpen()
     {
         $this->orders->open();
 
-        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/orders');
-        $this->assertEquals($this->client->getLastRequest()->getMethod(), 'GET');
+        $this->assertEquals('/api/orders', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
+        $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
+
+        $this->orders->open('BTC_PERP');
+
+        parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
+        $this->assertEquals(['market' => 'BTC_PERP'], $query);
     }
 
     public function testCreateOrder()
     {
         $order = $this->orders->create(['size' => 99.9, 'market' => 'BTC-PERP']);
-        
+
         $this->assertInstanceOf(PendingOrder::class, $order);
         $this->assertEquals('BTC-PERP', $order->market);
         $this->assertEquals(99.9, $order->size);
         $this->assertEquals(['market' => 'BTC-PERP', 'size' => 99.9], $order->toArray());
-        
+
         $order->place();
 
         $responseBody = $this->client->getLastRequest()->getBody();
         $responseBody->rewind();
         $payload = json_decode($responseBody->getContents(), true);
-        
-        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/orders');
-        $this->assertEquals($this->client->getLastRequest()->getMethod(), 'POST');
+
+        $this->assertEquals('/api/orders', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('POST', $this->client->getLastRequest()->getMethod());
         $this->assertEquals(['market' => 'BTC-PERP', 'size' => 99.9], $payload);
-        
+
         $order = $this->orders->create()->market(99.9)->sell('BTC-PERP')->immediateOrCancel();
 
         $this->assertInstanceOf(PendingOrder::class, $order);
         $this->assertEquals('BTC-PERP', $order->market);
         $this->assertEquals(99.9, $order->size);
         $this->assertEquals(
-            ['market' => 'BTC-PERP', 'size' => 99.9, 'type' => 'market', 'side' => 'sell', 'ioc' => true], 
+            ['market' => 'BTC-PERP', 'size' => 99.9, 'type' => 'market', 'side' => 'sell', 'ioc' => true],
             $order->toArray()
         );
 

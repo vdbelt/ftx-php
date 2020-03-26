@@ -48,9 +48,9 @@ class Orders extends HttpApi
         return $this->respond($this->http->delete(self::ORDERS_URI, null, compact('market', 'conditionalOrdersOnly', 'limitOrdersOnly')));
     }
 
-    public function history()
+    public function history(?string $market = null, ?int $start_time = null, ?int $end_time = null, ?int $limit = null)
     {
-        return $this->respond($this->http->get(self::ORDERS_HISTORY_URI));
+        return $this->respond($this->http->get(self::ORDERS_HISTORY_URI, compact('market', 'start_time', 'end_time', 'limit')));
     }
 
 }
