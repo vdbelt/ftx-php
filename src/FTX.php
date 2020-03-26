@@ -2,6 +2,7 @@
 
 namespace FTX;
 
+use FTX\Api\ConditionalOrders;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use FTX\Api\Account;
@@ -85,7 +86,12 @@ final class FTX
     {
         return new Orders($this->client);
     }
-    
+
+    public function conditionalOrders() : ConditionalOrders
+    {
+        return new ConditionalOrders($this->client);
+    }
+
     public function fills() : Fills
     {
         return new Fills($this->client);
