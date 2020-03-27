@@ -5,9 +5,12 @@ namespace FTX\Api;
 
 
 use FTX\Api\Support\PendingOrder;
+use FTX\Api\Traits\TransformsTimestamps;
 
 class Orders extends HttpApi
 {
+    use TransformsTimestamps;
+
     const ORDERS_URI = 'orders';
     const ORDERS_HISTORY_URI = 'orders/history';
     
@@ -48,8 +51,9 @@ class Orders extends HttpApi
         return $this->respond($this->http->delete(self::ORDERS_URI, null, compact('market', 'conditionalOrdersOnly', 'limitOrdersOnly')));
     }
 
-    public function history(?string $market = null, ?int $start_time = null, ?int $end_time = null, ?int $limit = null)
+    public function history(?string $market = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null, ?int $limit = null)
     {
+        [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
         return $this->respond($this->http->get(self::ORDERS_HISTORY_URI, compact('market', 'start_time', 'end_time', 'limit')));
     }
 

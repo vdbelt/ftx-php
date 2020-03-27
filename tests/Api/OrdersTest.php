@@ -26,13 +26,16 @@ class OrdersTest extends TestCase
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
         $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
 
-        $this->orders->history('BTC_PERP', 10000, 20000, 50);
+        $start = new \DateTime('2020-02-01');
+        $end = new \DateTime('2020-03-01');
+        $this->orders->history('BTC-PERP', $start, $end, 50);
 
         $this->assertEquals('/api/orders/history', $this->client->getLastRequest()->getUri()->getPath());
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
 
         parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
-        $this->assertEquals(['market' => 'BTC_PERP', 'start_time' => '10000', 'end_time' => '20000', 'limit' => '50'],
+
+        $this->assertEquals(['market' => 'BTC-PERP', 'start_time' => $start->getTimestamp(), 'end_time' => $end->getTimestamp(), 'limit' => '50'],
             $query
         );
 
@@ -84,10 +87,10 @@ class OrdersTest extends TestCase
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
         $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
 
-        $this->orders->open('BTC_PERP');
+        $this->orders->open('BTC-PERP');
 
         parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
-        $this->assertEquals(['market' => 'BTC_PERP'], $query);
+        $this->assertEquals(['market' => 'BTC-PERP'], $query);
     }
 
     public function testCreateOrder()

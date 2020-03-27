@@ -26,10 +26,12 @@ class ConditionalOrdersTest extends TestCase
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
         $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
 
-        $this->orders->history('BTC-PERP', 10000, 20000, PendingConditionalOrder::SIDE_BUY, 'trailing_stop', 'limit', 50);
+        $start = new \DateTime('2020-02-01');
+        $end = new \DateTime('2020-03-01');
+        $this->orders->history('BTC-PERP', $start, $end, PendingConditionalOrder::SIDE_BUY, 'trailing_stop', 'limit', 50);
 
         parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
-        $this->assertEquals(['market' => 'BTC-PERP', 'start_time' => '10000', 'end_time' => '20000', 'side' => PendingConditionalOrder::SIDE_BUY, 'type' => 'trailing_stop', 'orderType' => 'limit', 'limit' => '50'], $query);
+        $this->assertEquals(['market' => 'BTC-PERP', 'start_time' => $start->getTimestamp(), 'end_time' => $end->getTimestamp(), 'side' => PendingConditionalOrder::SIDE_BUY, 'type' => 'trailing_stop', 'orderType' => 'limit', 'limit' => '50'], $query);
     }
 
     public function testOpen()

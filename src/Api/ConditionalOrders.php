@@ -5,9 +5,12 @@ namespace FTX\Api;
 
 
 use FTX\Api\Support\PendingConditionalOrder;
+use FTX\Api\Traits\TransformsTimestamps;
 
 class ConditionalOrders extends HttpApi
 {
+    use TransformsTimestamps;
+
     const ORDERS_URI = 'orders';
     const COND_ORDERS_URI = 'conditional_orders';
     const COND_ORDERS_HISTORY_URI = 'conditional_orders/history';
@@ -55,16 +58,17 @@ class ConditionalOrders extends HttpApi
 
     /**
      * @param string|null $market
-     * @param int|null $start_time
-     * @param int|null $end_time
+     * @param DateTimeInterface|null $start_time
+     * @param DateTimeInterface|null $end_time
      * @param string|null $side
      * @param string|null $type valid values are stop, trailing_stop, and take_profit
      * @param string|null $orderType valid values are market and limit
      * @param int|null $limit default 100, maximum 100
      * @return mixed
      */
-    public function history(?string $market = null, ?int $start_time = null, ?int $end_time = null, ?string $side = null, ?string $type = null, ?string $orderType = null, ?int $limit = null)
+    public function history(?string $market = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null, ?string $side = null, ?string $type = null, ?string $orderType = null, ?int $limit = null)
     {
+        [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
         return $this->respond($this->http->get(self::COND_ORDERS_HISTORY_URI, compact('market', 'start_time', 'end_time', 'side', 'type', 'orderType', 'limit')));
     }
 }
