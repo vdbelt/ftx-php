@@ -141,5 +141,41 @@ class ConditionalOrdersTest extends TestCase
             ['side' => PendingConditionalOrder::SIDE_BUY, 'size' => 99.9, 'market' => 'BTC-PERP', 'trailValue' => -0.05, 'type' => PendingConditionalOrder::TYPE_TRAILING_STOP],
             $order->toArray()
         );
+
+        $order = $this->orders->create()->trailingStop(99.9, -0.05)->buy('BTC-PERP')->retryUntilFilled(true);
+
+        $this->assertInstanceOf(PendingConditionalOrder::class, $order);
+        $this->assertEquals('BTC-PERP', $order->market);
+        $this->assertEquals(99.9, $order->size);
+        $this->assertEquals(-0.05, $order->trailValue);
+        $this->assertEquals(
+            [
+                'side' => PendingConditionalOrder::SIDE_BUY, 
+                'size' => 99.9,
+                'market' => 'BTC-PERP',
+                'trailValue' => -0.05,
+                'type' => PendingConditionalOrder::TYPE_TRAILING_STOP,
+                'retryUntilFilled' => true
+            ],
+            $order->toArray()
+        );
+
+        $order = $this->orders->create()->trailingStop(99.9, -0.05)->buy('BTC-PERP')->reduceOnly();
+
+        $this->assertInstanceOf(PendingConditionalOrder::class, $order);
+        $this->assertEquals('BTC-PERP', $order->market);
+        $this->assertEquals(99.9, $order->size);
+        $this->assertEquals(-0.05, $order->trailValue);
+        $this->assertEquals(
+            [
+                'side' => PendingConditionalOrder::SIDE_BUY,
+                'size' => 99.9, 
+                'market' => 'BTC-PERP', 
+                'trailValue' => -0.05,
+                'type' => PendingConditionalOrder::TYPE_TRAILING_STOP,
+                'reduceOnly' => true
+            ],
+            $order->toArray()
+        );
     }
 }
