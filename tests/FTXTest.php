@@ -2,6 +2,7 @@
 
 namespace FTX\Tests;
 
+use FTX\Api\ConditionalOrders;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use FTX\Api\Account;
@@ -69,6 +70,7 @@ class FTXTest extends FTXTestCase
         $this->assertInstanceOf(Account::class, $ftx->account());
         $this->assertInstanceOf(Wallet::class, $ftx->wallet());
         $this->assertInstanceOf(Orders::class, $ftx->orders());
+        $this->assertInstanceOf(ConditionalOrders::class, $ftx->conditionalOrders());
         $this->assertInstanceOf(Fills::class, $ftx->fills());
         $this->assertInstanceOf(FundingPayments::class, $ftx->fundingPayments());
         $this->assertInstanceOf(LeveragedTokens::class, $ftx->leveragedTokens());

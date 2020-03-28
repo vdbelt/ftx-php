@@ -62,9 +62,9 @@ class HttpClient
         return $this->send('POST', $path, $parameters, $payload);
     }
     
-    public function delete(string $path) : ResponseInterface
+    public function delete(string $path, ?array $parameters = [], ?array $payload = []) : ResponseInterface
     {
-        return $this->send('DELETE', $path);
+        return $this->send('DELETE', $path, $parameters, $payload);
     }
     
     private function send(string $method, $path, ?array $parameters = [], ?array $payload = []) : ResponseInterface
@@ -94,7 +94,7 @@ class HttpClient
         
         $request = $this->requestFactory->createRequest($method, $uri);
         
-        if('POST' == $method) {
+        if('POST' == $method || 'DELETE' == $method) {
             $body = $this->streamFactory->createStream(json_encode($payload));
             $request = $request->withBody($body);
         }
@@ -120,7 +120,7 @@ class HttpClient
             . $request->getMethod()
             . $request->getUri()->getPath()
             . ($request->getUri()->getQuery() ? '?'.$request->getUri()->getQuery() : '')
-            . ($request->getMethod() == 'POST' ? json_encode($payload) : '');
+            . (($request->getMethod() == 'POST' || $request->getMethod() == 'DELETE')  ? json_encode($payload) : '');
         
         return hash_hmac('sha256', $data, $this->api_secret);
     }
