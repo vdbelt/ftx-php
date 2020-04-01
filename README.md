@@ -1,4 +1,3 @@
-## Please note: WIP!
 # PHP client for FTX
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/vdbelt/ftx-php/PHP%20Composer)
 ![Codecov](https://img.shields.io/codecov/c/github/vdbelt/ftx-php)
