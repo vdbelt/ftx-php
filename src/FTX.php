@@ -3,6 +3,7 @@
 namespace FTX;
 
 use FTX\Api\ConditionalOrders;
+use FTX\Api\SpotMargin;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use FTX\Api\Account;
@@ -110,5 +111,10 @@ final class FTX
     public function options() : Options
     {
         return new Options($this->client);
+    }
+    
+    public function spotMargin() : SpotMargin
+    {
+        return new SpotMargin($this->client);
     }
 }

@@ -3,6 +3,7 @@
 namespace FTX\Tests;
 
 use FTX\Api\ConditionalOrders;
+use FTX\Api\SpotMargin;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use FTX\Api\Account;
@@ -75,5 +76,6 @@ class FTXTest extends FTXTestCase
         $this->assertInstanceOf(FundingPayments::class, $ftx->fundingPayments());
         $this->assertInstanceOf(LeveragedTokens::class, $ftx->leveragedTokens());
         $this->assertInstanceOf(Options::class, $ftx->options());
+        $this->assertInstanceOf(SpotMargin::class, $ftx->spotMargin());
     }
 }
