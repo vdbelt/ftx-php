@@ -16,6 +16,6 @@ class Fills extends HttpApi
     {
         [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
         
-        $this->respond($this->http->get(self::FILLS_URI, compact('market', 'limit', 'start_time', 'end_time')));
+        return $this->respond($this->http->get(self::FILLS_URI, compact('market', 'limit', 'start_time', 'end_time')));
     }
 }
