@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-json": "*",
         "psr/http-message": "^1.0",
         "php-http/httplug": "^2.0",
