@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
         php: [ 7.4, 8.0 ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
+        dependency-version: [ prefer-stable ]
         
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
 
@@ -24,7 +24,7 @@ jobs:
             php-version: ${{ matrix.php }}
 
       -   name: Install dependencies
-          run: composer install --${{ matrix.dependency-version }} --prefer-dist --no-progress --no-suggest
+          run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
       -   name: Run test suite
           run: composer run-script test
