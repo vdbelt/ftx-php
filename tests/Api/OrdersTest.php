@@ -118,7 +118,7 @@ class OrdersTest extends TestCase
         $this->assertEquals('BTC-PERP', $order->market);
         $this->assertEquals(99.9, $order->size);
         $this->assertEquals(
-            ['market' => 'BTC-PERP', 'size' => 99.9, 'type' => 'market', 'side' => 'sell', 'ioc' => true],
+            ['market' => 'BTC-PERP', 'size' => 99.9, 'type' => 'market', 'side' => 'sell', 'ioc' => true, 'price' => null],
             $order->toArray()
         );
 
@@ -138,7 +138,7 @@ class OrdersTest extends TestCase
         $this->assertEquals('BTC-PERP', $order->market);
         $this->assertEquals(10, $order->size);
         $this->assertEquals(
-            ['market' => 'BTC-PERP', 'size' => 10, 'type' => 'market', 'side' => 'buy', 'reduceOnly' => true, 'clientId' => 'foo'],
+            ['market' => 'BTC-PERP', 'size' => 10, 'type' => 'market', 'side' => 'buy', 'reduceOnly' => true, 'clientId' => 'foo', 'price' => null],
             $order->toArray()
         );
     }

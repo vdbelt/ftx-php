@@ -33,6 +33,7 @@ class PendingOrder extends PendingRequest
     {
         $this->attributes['type'] = self::TYPE_MARKET;
         $this->attributes['size'] = $size;
+        $this->attributes['price'] = null;
         
         return $this;
     }
