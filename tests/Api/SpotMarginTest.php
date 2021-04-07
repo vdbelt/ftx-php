@@ -73,6 +73,19 @@ class SpotMarginTest extends TestCase
         $this->assertEquals($this->client->getLastRequest()->getMethod(), 'GET');
     }
 
+    public function testSubmitLendingOffer()
+    {
+        $this->spotMargin->submitLendingOffer('USD', 10., 1e-6);
+
+        $responseBody = $this->client->getLastRequest()->getBody();
+        $responseBody->rewind();
+        $payload = json_decode($responseBody->getContents(), true);
+
+        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/spot_margin/offers');
+        $this->assertEquals($this->client->getLastRequest()->getMethod(), 'POST');
+        $this->assertEquals($payload, ['coin' => 'USD', 'size' => 10., 'rate' => 1e-6]);
+    }
+
     public function testLendingInfo()
     {
         $this->spotMargin->lendingInfo();

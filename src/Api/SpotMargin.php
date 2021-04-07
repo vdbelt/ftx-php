@@ -43,6 +43,11 @@ class SpotMargin extends HttpApi
         return $this->respond($this->http->get(self::SPOTMARGIN_URI.'/offers'));
     }
     
+    public function submitLendingOffer(string $coin, float $size, float $rate)
+    {
+        return $this->respond($this->http->post(self::SPOTMARGIN_URI.'/offers', null, compact('coin', 'size', 'rate')));
+    }
+    
     public function lendingInfo()
     {
         return $this->respond($this->http->get(self::SPOTMARGIN_URI.'/lending_info'));
