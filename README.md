@@ -78,9 +78,11 @@ $ftx->wallet()->coins()
 $ftx->wallet()->balances()
 $ftx->wallet()->allBalances() // Balances accross all subaccounts
 $ftx->wallet()->depositAddress('BTC')
+$ftx->wallet()->depositAddress('USDT', 'erc20')
 $ftx->wallet()->deposits()
 $ftx->wallet()->withdrawals()
 $ftx->wallet()->createWithdrawalRequest('BTC', 1, 'address')->withdraw()
+$ftx->wallet()->createWithdrawalRequest('BTC', 1, 'address')->fees()
 $ftx->wallet()->createWithdrawalRequest('BTC', 1, 'address')->withPassword()->withCode()->withTag()->withdraw()
 ```
 

@@ -26,6 +26,11 @@ class PendingWithdrawalRequest extends PendingRequest
 
         return $this;
     }
+
+    public function fees()
+    {
+        return $this->api->fees($this);
+    }
     
     public function withdraw()
     {

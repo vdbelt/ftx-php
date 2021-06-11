@@ -30,6 +30,12 @@ class WalletTest extends TestCase
         $this->wallet->depositAddress('foo');
 
         $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/wallet/deposit_address/foo');
+        $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
+
+        $this->wallet->depositAddress('foo', 'erc20');
+
+        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/wallet/deposit_address/foo');
+        $this->assertEquals('method=erc20', $this->client->getLastRequest()->getUri()->getQuery());
     }
 
     public function testWithdrawals()
@@ -58,6 +64,16 @@ class WalletTest extends TestCase
         $this->wallet->allBalances();
 
         $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/wallet/all_balances');
+    }
+
+    public function testWithdrawalFee()
+    {
+        $withdrawal = $this->wallet->createWithdrawalRequest('foo', 100, 'bar');
+        $withdrawal->fees();
+
+        $this->assertEquals($this->client->getLastRequest()->getUri()->getPath(), '/api/wallet/withdrawal_fee');
+        $this->assertEquals($this->client->getLastRequest()->getMethod(), 'GET');
+        $this->assertEquals('coin=foo&size=100&address=bar', $this->client->getLastRequest()->getUri()->getQuery());
     }
 
     public function testWithdrawalRequest()
