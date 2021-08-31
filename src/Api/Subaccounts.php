@@ -27,7 +27,7 @@ class Subaccounts extends HttpApi
     
     public function delete(string $nickname)
     {
-        return $this->respond($this->http->delete(self::SUBACCOUNTS_URI));
+        return $this->respond($this->http->delete(self::SUBACCOUNTS_URI, null, compact('nickname')));
     }
     
     public function balances(string $nickname)
