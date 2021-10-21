@@ -15,9 +15,13 @@ class Account extends HttpApi
         return $this->respond($this->http->get(self::ACCOUNTS_URI));    
     }
     
-    public function positions()
+    public function positions(?bool $showAvgPrice = null)
     {
-        return $this->respond($this->http->get(self::POSITIONS_URI));
+        if($showAvgPrice == false) {
+            $showAvgPrice = null;
+        }
+        
+        return $this->respond($this->http->get(self::POSITIONS_URI, compact("showAvgPrice")));
     }
     
     public function changeAccountLeverage(int $leverage)
