@@ -14,7 +14,8 @@ class FundingPayments extends HttpApi
     
     public function all(?string $future = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
     {
-        return $this->respond($this->http->get(self::FUNDING_PAYMENTS_URI));
+        [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
+        return $this->respond($this->http->get(self::FUNDING_PAYMENTS_URI, compact('future', 'start_time', 'end_time')));
     }
     
 }
