@@ -73,9 +73,10 @@ class SpotMarginTest extends TestCase
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
         $this->assertEquals('', $this->client->getLastRequest()->getUri()->getQuery());
 
+
         $start = new \DateTime('2020-02-01');
         $end = new \DateTime('2020-03-01');
-        $this->spotMargin->globalLendingHistory($start, $end);
+        $this->spotMargin->globalLendingHistory(null, $start, $end);
 
         $this->assertEquals('/api/spot_margin/history', $this->client->getLastRequest()->getUri()->getPath());
         $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
@@ -83,6 +84,19 @@ class SpotMarginTest extends TestCase
         parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
 
         $this->assertEquals(['start_time' => $start->getTimestamp(), 'end_time' => $end->getTimestamp()],
+            $query
+        ); 
+
+
+        $coin = 'USD';
+        $this->spotMargin->globalLendingHistory($coin, $start, $end);
+
+        $this->assertEquals('/api/spot_margin/history', $this->client->getLastRequest()->getUri()->getPath());
+        $this->assertEquals('GET', $this->client->getLastRequest()->getMethod());
+
+        parse_str($this->client->getLastRequest()->getUri()->getQuery(), $query);
+
+        $this->assertEquals(['coin' => $coin, 'start_time' => $start->getTimestamp(), 'end_time' => $end->getTimestamp()],
             $query
         );
     }
