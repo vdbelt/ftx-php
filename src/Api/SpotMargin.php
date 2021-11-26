@@ -4,8 +4,12 @@
 namespace FTX\Api;
 
 
+use FTX\Api\Traits\TransformsTimestamps;
+
 class SpotMargin extends HttpApi
 {
+    use TransformsTimestamps;
+
     const SPOTMARGIN_URI = 'spot_margin';
 
     public function borrowRates()
@@ -37,7 +41,13 @@ class SpotMargin extends HttpApi
     {
         return $this->respond($this->http->get(self::SPOTMARGIN_URI.'/lending_history'));
     }
-    
+
+    public function globalLendingHistory(?string $coin = null, ?\DateTimeInterface $start_time = null, ?\DateTimeInterface $end_time = null)
+    {
+        [$start_time, $end_time] = $this->transformTimestamps($start_time, $end_time);
+        return $this->respond($this->http->get(self::SPOTMARGIN_URI.'/history', compact('coin', 'start_time', 'end_time')));
+    }
+
     public function offers()
     {
         return $this->respond($this->http->get(self::SPOTMARGIN_URI.'/offers'));
