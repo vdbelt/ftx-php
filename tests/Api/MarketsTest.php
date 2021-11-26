@@ -63,4 +63,11 @@ class MarketsTest extends TestCase
         $this->markets->trades('BTC-PERP', null, $start, $end);
         $this->assertEquals($this->client->getLastRequest()->getUri()->getQuery(), 'start_time='.$start->getTimestamp().'&end_time='.$end->getTimestamp());
     }
+
+    public function testDateTimeImmutable()
+    {
+        $start = new \DateTimeImmutable('2020-02-01');
+        $this->markets->trades('BTC-PERP', null, $start);
+        $this->assertEquals($this->client->getLastRequest()->getUri()->getQuery(), 'start_time='.$start->getTimestamp());
+    }
 }
